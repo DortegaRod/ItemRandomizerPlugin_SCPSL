@@ -12,9 +12,8 @@ namespace ItemRandomizerPlugin {
 
         public void OnItemDropped(DroppingItemEventArgs ev) {
             if (ev.Player.CurrentRoom.Type == Scp173RoomType) {
-                var itemTypes = Enum.GetValues(typeof(ItemType)).Cast<ItemType>().ToList());
+                var itemTypes = Enum.GetValues(typeof(ItemType)).Cast<ItemType>().ToList();
                 var randomItemType = itemTypes[Random.Next(itemTypes.Count)];
-
                 if (ev.Item?.Base != null) {
                     ev.Player.Inventory.ServerRemoveItem(ev.Item.Base.ItemSerial, ev.Item.Base.PickupDropModel);
                     if (Random.Next(10) < 5) {
