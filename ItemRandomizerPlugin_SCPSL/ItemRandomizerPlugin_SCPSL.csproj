@@ -43,6 +43,10 @@
     <Reference Include="Assembly-CSharp-Publicized">
       <HintPath>..\..\..\..\OneDrive\Escritorio\SCP Plugin DEV\Dev\Assembly-CSharp-Publicized.dll</HintPath>
     </Reference>
+    <Reference Include="CommandSystem.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\OneDrive\Escritorio\SCP Plugin DEV\Dev\CommandSystem.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Exiled.API">
       <HintPath>..\..\..\..\OneDrive\Escritorio\SCP Plugin DEV\SCP Secret Laboratory\PluginAPI\plugins\global\dependencies\Exiled.API.dll</HintPath>
     </Reference>
@@ -88,6 +92,7 @@
     <Reference Include="Mono.Security">
       <HintPath>..\..\..\..\OneDrive\Escritorio\SCP Plugin DEV\Dev\Mono.Security.dll</HintPath>
     </Reference>
+    <Reference Include="PluginAPI, Version=13.1.3.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -358,6 +363,9 @@
     <Compile Include="ItemRandomizer.cs" />
     <Compile Include="PlayerHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoomCommand.cs" />
+    <Compile Include="RoomPoint.cs" />
+    <Compile Include="SerializedVector3.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
