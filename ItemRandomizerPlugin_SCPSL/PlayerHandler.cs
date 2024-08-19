@@ -51,14 +51,6 @@ namespace ItemRandomizerPlugin {
             return allowedItems;
         }
 
-        public void CoinSpawn() {
-           
-            foreach (var player in Player.List) {
-                player.Inventory.ServerAddItem(ItemType.Coin);
-            }
-        }
-
-
 
 
         private bool IsNearDropLocation(Player player) {
