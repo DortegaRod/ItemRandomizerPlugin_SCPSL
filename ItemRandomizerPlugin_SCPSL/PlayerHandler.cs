@@ -14,14 +14,12 @@ namespace ItemRandomizerPlugin {
         private static readonly RoomType Scp173RoomType = RoomType.Lcz173;
         private static readonly Random Random = new Random();
         private static readonly Vector3 DropLocation = new Vector3(257.3519f, 13.14142f, 127.7134f);
-
+        private static List<ItemType> allowedItems = AddAllowedItems();
 
         public void OnItemDropped(DroppingItemEventArgs ev) {
+            Log.Info("DroppingEvent");
             if (ev.Player.CurrentRoom.Type == Scp173RoomType && ev.Item.Type == ItemType.Coin && IsNearDropLocation(ev.Player)) {
-
-                var itemTypes = Enum.GetValues(typeof(ItemType)).Cast<ItemType>().ToList();
-                itemTypes.Remove(ItemType.MicroHID);
-                var randomItemType = itemTypes[Random.Next(itemTypes.Count)];
+                var randomItemType = allowedItems[Random.Next(allowedItems.Count)];
 
                 if (ev.Item?.Base != null) {
                     ev.Player.Inventory.ServerRemoveItem(ev.Item.Base.ItemSerial, ev.Item.Base.PickupDropModel);
@@ -38,16 +36,18 @@ namespace ItemRandomizerPlugin {
             }
         }
 
-        private List AddAllowedItems(List itemTypes) {
-            List allowedItems = itemTypes.GetRange(1, 16);
-            allowedItems.AddRange(18, 19);
-            allowedItems.AddRange(20, 21);
-            allowedItems.AddRange(25, 26);
-            allowedItems.AddRange(30, 38);
-            allowedItems.AddRange(42, 46);
-            allowedItems.AddRange(48, 49);
-            allowedItems.AddRange(51, 54);
-            allowedItems.Add(ItemType.KeycardChaosInsurgency)
+        public static List<ItemType> AddAllowedItems() {
+            Log.Info("AllowedItems");
+            var itemTypes = Enum.GetValues(typeof(ItemType)).Cast<ItemType>().ToList();
+            var allowedItems = itemTypes.GetRange(1, 15);
+            allowedItems.AddRange(itemTypes.GetRange(17, 2));
+            allowedItems.AddRange(itemTypes.GetRange(25, 2));
+            allowedItems.AddRange(itemTypes.GetRange(30, 9));
+            allowedItems.AddRange(itemTypes.GetRange(42, 5));
+            allowedItems.AddRange(itemTypes.GetRange(48, 2));
+            allowedItems.AddRange(itemTypes.GetRange(51, 4));
+            Log.Info(allowedItems.Count);
+            return allowedItems;
         }
 
         public void CoinSpawn() {
@@ -74,12 +74,7 @@ namespace ItemRandomizerPlugin {
                 return true;
 
             }
-
-
             return false;
-
-
-
         }
 
     }
