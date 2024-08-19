@@ -4,6 +4,7 @@ using Exiled.Events.EventArgs.Player;
 using InventorySystem;
 using ItemRandomizerPlugin_SCPSL.RoomPoints;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Random = System.Random;
@@ -37,6 +38,17 @@ namespace ItemRandomizerPlugin {
             }
         }
 
+        private List AddAllowedItems(List itemTypes) {
+            List allowedItems = itemTypes.GetRange(1, 16);
+            allowedItems.AddRange(18, 19);
+            allowedItems.AddRange(20, 21);
+            allowedItems.AddRange(25, 26);
+            allowedItems.AddRange(30, 38);
+            allowedItems.AddRange(42, 46);
+            allowedItems.AddRange(48, 49);
+            allowedItems.AddRange(51, 54);
+            allowedItems.Add(ItemType.KeycardChaosInsurgency)
+        }
 
         public void CoinSpawn() {
            
