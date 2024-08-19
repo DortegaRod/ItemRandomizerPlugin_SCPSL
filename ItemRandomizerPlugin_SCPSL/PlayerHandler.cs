@@ -45,7 +45,8 @@ namespace ItemRandomizerPlugin {
             allowedItems.AddRange(itemTypes.GetRange(30, 9));
             allowedItems.AddRange(itemTypes.GetRange(42, 5));
             allowedItems.AddRange(itemTypes.GetRange(48, 2));
-            allowedItems.AddRange(itemTypes.GetRange(51, 4));
+            allowedItems.AddRange(itemTypes.GetRange(51, 1));
+            allowedItems.AddRange(itemTypes.GetRange(54, 1));
             Log.Info(allowedItems.Count);
             return allowedItems;
         }
