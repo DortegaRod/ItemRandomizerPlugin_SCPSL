@@ -363,6 +363,9 @@
     <Compile Include="ItemRandomizer.cs" />
     <Compile Include="PlayerHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoomPoints\RoomCommand.cs" />
+    <Compile Include="RoomPoints\RoomPointObject.cs" />
+    <Compile Include="RoomPoints\SerializedVector3.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
