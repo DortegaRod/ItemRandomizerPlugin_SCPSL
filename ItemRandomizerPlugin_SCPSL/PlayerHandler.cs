@@ -23,15 +23,8 @@ namespace ItemRandomizerPlugin {
 
                 if (ev.Item?.Base != null) {
                     ev.Player.Inventory.ServerRemoveItem(ev.Item.Base.ItemSerial, ev.Item.Base.PickupDropModel);
-
-                    if (Random.Next(100) < 50) {
-                        ev.Player.AddItem(randomItemType);
-                        Log.Info($"Item {randomItemType} added");
-                    }
-
-                    else {
-                        Log.Info("Item destroyed");
-                    }
+                    ev.Player.AddItem(randomItemType);
+                    Log.Info($"Item {randomItemType} added");
                 }
             }
         }
@@ -49,6 +42,13 @@ namespace ItemRandomizerPlugin {
             allowedItems.AddRange(itemTypes.GetRange(54, 1));
             Log.Info(allowedItems.Count);
             return allowedItems;
+        }
+
+        public void CoinSpawn() {
+            Log.Info("noujef");
+            foreach (var player in Player.List) {
+                player.Inventory.ServerAddItem(ItemType.Coin);
+            }
         }
 
 
