@@ -17,7 +17,6 @@ namespace ItemRandomizerPlugin {
         private static List<ItemType> allowedItems = AddAllowedItems();
 
         public void OnItemDropped(DroppingItemEventArgs ev) {
-            Log.Info("DroppingEvent");
             if (ev.Player.CurrentRoom.Type == Scp173RoomType && ev.Item.Type == ItemType.Coin && IsNearDropLocation(ev.Player)) {
                 var randomItemType = allowedItems[Random.Next(allowedItems.Count)];
 
@@ -35,7 +34,7 @@ namespace ItemRandomizerPlugin {
             var allowedItems = itemTypes.GetRange(1, 15);
             allowedItems.AddRange(itemTypes.GetRange(17, 2));
             allowedItems.AddRange(itemTypes.GetRange(25, 2));
-            allowedItems.AddRange(itemTypes.GetRange(29, 10));
+            allowedItems.AddRange(itemTypes.GetRange(29, 7));
             allowedItems.AddRange(itemTypes.GetRange(42, 5));
             allowedItems.AddRange(itemTypes.GetRange(48, 2));
             allowedItems.AddRange(itemTypes.GetRange(51, 1));
@@ -45,7 +44,6 @@ namespace ItemRandomizerPlugin {
         }
 
         public void CoinSpawn() {
-            Log.Info("noujef");
             foreach (var player in Player.List) {
                 player.Inventory.ServerAddItem(ItemType.Coin);
             }
