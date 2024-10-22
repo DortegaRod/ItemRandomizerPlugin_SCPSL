@@ -124,10 +124,8 @@ namespace ItemRandomizerPlugin {
 
         private List<RoomType> lczRooms = new List<RoomType>
         {
-        RoomType.LczArmory,
         RoomType.LczCurve,
         RoomType.LczStraight,
-        RoomType.Lcz914,
         RoomType.LczCrossing,
         RoomType.LczTCross,
         RoomType.LczCafe,
