@@ -42,12 +42,12 @@ namespace ItemRandomizerPlugin {
 
         public void OnFlip(FlippingCoinEventArgs ev)
         {
-            if(!ev.IsTails && ev.Player.CurrentRoom.Zone== ZoneType.LightContainment)
+            if(!ev.IsTails)
             {
                 if (usedCoins.Contains(ev.Item))
                 {
                      ev.IsAllowed = false;
-                } else
+                } else if(ev.Player.CurrentRoom.Zone == ZoneType.LightContainment)
                 {
                     RoomType tpRoom;
                     do {
@@ -58,7 +58,17 @@ namespace ItemRandomizerPlugin {
                         ev.Player.Teleport(tpRoom);
                         usedCoins.Add(ev.Item);
                     });
-                    
+
+                } else if (ev.Player.CurrentRoom.Zone == ZoneType.HeavyContainment && Map.IsLczDecontaminated) {
+                    RoomType tpRoom;
+                    do {
+                        tpRoom = GetRandomHCZRoom();
+                    } while (ev.Player.CurrentRoom.Equals(tpRoom));
+
+                    Timing.CallDelayed(3f, () => {
+                        ev.Player.Teleport(tpRoom);
+                        usedCoins.Add(ev.Item);
+                    });
                 }
             }
         }
@@ -88,6 +98,12 @@ namespace ItemRandomizerPlugin {
             Random random = new Random();
             int index = random.Next(lczRooms.Count);
             return lczRooms[index];
+        }
+
+        public RoomType GetRandomHCZRoom() {
+            Random random = new Random();
+            int index = random.Next(hczRooms.Count);
+            return hczRooms[index];
         }
 
         private static List<ItemType> AddAllowedItems()
@@ -125,5 +141,29 @@ namespace ItemRandomizerPlugin {
         RoomType.LczCheckpointA,
         RoomType.Lcz330
         };
+
+        private List<RoomType> hczRooms = new List<RoomType>
+        {
+        RoomType.Hcz079,
+        RoomType.HczEzCheckpointA,
+        RoomType.HczEzCheckpointB,
+        RoomType.HczArmory,
+        RoomType.Hcz939,
+        RoomType.HczHid,
+        RoomType.Hcz049,
+        RoomType.HczCrossing,
+        RoomType.Hcz106,
+        RoomType.HczNuke,
+        RoomType.HczTestRoom,
+        RoomType.HczElevatorA,
+        RoomType.HczElevatorB,
+        RoomType.HczTesla,
+        RoomType.HczServers,
+        RoomType.HczTCross,
+        RoomType.HczCurve,
+        RoomType.Hcz096
+        };
+
+        
     }
 }
