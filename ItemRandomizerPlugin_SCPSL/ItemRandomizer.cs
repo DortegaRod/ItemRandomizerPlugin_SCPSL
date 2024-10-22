@@ -20,6 +20,7 @@
             Player.DroppingItem += _playerHandler.OnItemDropped;
             Player.FlippingCoin += _playerHandler.OnFlip;
             Server.RoundStarted += _playerHandler.CoinSpawn;
+            Server.RoundEnded += _playerHandler.ClearCoinList;
             base.OnEnabled();
         }
 
@@ -27,6 +28,7 @@
             Player.DroppingItem -= _playerHandler.OnItemDropped;
             Player.FlippingCoin -= _playerHandler.OnFlip;
             Server.RoundStarted -= _playerHandler.CoinSpawn;
+            Server.RoundEnded -= _playerHandler.ClearCoinList;
             _playerHandler = null;
             base.OnDisabled();
         }

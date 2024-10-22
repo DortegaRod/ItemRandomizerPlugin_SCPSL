@@ -2,10 +2,12 @@
 using Exiled.API.Features;
 using Exiled.API.Features.Items;
 using Exiled.Events.EventArgs.Player;
+using Exiled.Events.EventArgs.Server;
 using InventorySystem;
 using ItemRandomizerPlugin_SCPSL.RoomPoints;
 using MEC;
 using PluginAPI.Core.Zones.Light;
+using PluginAPI.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +58,7 @@ namespace ItemRandomizerPlugin {
                     
                     Timing.CallDelayed(3f, () => {
                         ev.Player.Teleport(tpRoom);
+                        ev.Player.EnableEffect(EffectType.SinkHole, 3f);
                         usedCoins.Add(ev.Item);
                     });
 
@@ -67,10 +70,15 @@ namespace ItemRandomizerPlugin {
 
                     Timing.CallDelayed(3f, () => {
                         ev.Player.Teleport(tpRoom);
+                        ev.Player.EnableEffect(EffectType.SinkHole, 3f);
                         usedCoins.Add(ev.Item);
                     });
                 }
             }
+        }
+
+        public void ClearCoinList(RoundEndedEventArgs ev) {
+            usedCoins.Clear();
         }
 
 
