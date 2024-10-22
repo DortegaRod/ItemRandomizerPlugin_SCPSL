@@ -1,8 +1,10 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
+using Exiled.API.Features.Items;
 using Exiled.Events.EventArgs.Player;
 using InventorySystem;
 using ItemRandomizerPlugin_SCPSL.RoomPoints;
+using MEC;
 using PluginAPI.Core.Zones.Light;
 using System;
 using System.Collections.Generic;
@@ -16,6 +18,7 @@ namespace ItemRandomizerPlugin {
         private static readonly Random Random = new Random();
         private static readonly Vector3 DropLocation = new Vector3(257.3519f, 13.14142f, 127.7134f);
         private static List<ItemType> allowedItems = AddAllowedItems();
+        List<Item> usedCoins = new List<Item>();
 
         public void OnItemDropped(DroppingItemEventArgs ev) {
             if (ev.Player.CurrentRoom.Type == Scp173RoomType && ev.Item.Type == ItemType.Coin && IsNearDropLocation(ev.Player)) {
@@ -39,19 +42,23 @@ namespace ItemRandomizerPlugin {
 
         public void OnFlip(FlippingCoinEventArgs ev)
         {
-            List<Player> bannedFromFlip = new List<Player>();
-            if(ev.Player.CurrentRoom.Zone== ZoneType.LightContainment)
+            if(!ev.IsTails && ev.Player.CurrentRoom.Zone== ZoneType.LightContainment)
             {
-                if (!ev.IsTails)
+                if (usedCoins.Contains(ev.Item))
                 {
-                    if (bannedFromFlip.Contains(ev.Player))
-                    {
-                        ev.IsAllowed = false;
-                    } else
-                    {
-                        ev.Player.Teleport(GetRandomLCZRoom());
-                        bannedFromFlip.Add(ev.Player);
-                    }
+                     ev.IsAllowed = false;
+                } else
+                {
+                    RoomType tpRoom;
+                    do {
+                        tpRoom = GetRandomLCZRoom();
+                    } while (ev.Player.CurrentRoom.Equals(tpRoom));
+                    
+                    Timing.CallDelayed(3f, () => {
+                        ev.Player.Teleport(tpRoom);
+                        usedCoins.Add(ev.Item);
+                    });
+                    
                 }
             }
         }

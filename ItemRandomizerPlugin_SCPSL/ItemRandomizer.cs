@@ -25,6 +25,7 @@
 
         public override void OnDisabled() {
             Player.DroppingItem -= _playerHandler.OnItemDropped;
+            Player.FlippingCoin -= _playerHandler.OnFlip;
             Server.RoundStarted -= _playerHandler.CoinSpawn;
             _playerHandler = null;
             base.OnDisabled();
