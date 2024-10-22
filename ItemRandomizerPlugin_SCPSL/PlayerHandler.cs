@@ -56,9 +56,9 @@ namespace ItemRandomizerPlugin {
                         tpRoom = GetRandomLCZRoom();
                     } while (ev.Player.CurrentRoom.Equals(tpRoom));
                     
-                    Timing.CallDelayed(5f, () => {
+                    Timing.CallDelayed(3f, () => {
                         ev.Player.Teleport(tpRoom);
-                        ev.Player.EnableEffect(EffectType.SinkHole, 3f);
+                        ev.Player.EnableEffect(EffectType.SinkHole, 5f);
                         usedCoins.Add(ev.Item);
                     });
 
@@ -68,9 +68,9 @@ namespace ItemRandomizerPlugin {
                         tpRoom = GetRandomHCZRoom();
                     } while (ev.Player.CurrentRoom.Equals(tpRoom));
 
-                    Timing.CallDelayed(5f, () => {
+                    Timing.CallDelayed(3f, () => {
                         ev.Player.Teleport(tpRoom);
-                        ev.Player.EnableEffect(EffectType.SinkHole, 3f);
+                        ev.Player.EnableEffect(EffectType.SinkHole, 5f);
                         usedCoins.Add(ev.Item);
                     });
                 }
