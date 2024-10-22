@@ -18,6 +18,7 @@
             Log.Info("ItemRandomizerPlugin loaded successfully");
             _playerHandler = new PlayerHandler();
             Player.DroppingItem += _playerHandler.OnItemDropped;
+            Player.FlippingCoin += _playerHandler.OnFlip;
             Server.RoundStarted += _playerHandler.CoinSpawn;
             base.OnEnabled();
         }

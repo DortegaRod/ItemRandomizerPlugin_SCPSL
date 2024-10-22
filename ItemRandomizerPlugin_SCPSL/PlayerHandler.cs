@@ -3,6 +3,7 @@ using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
 using InventorySystem;
 using ItemRandomizerPlugin_SCPSL.RoomPoints;
+using PluginAPI.Core.Zones.Light;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,20 +29,7 @@ namespace ItemRandomizerPlugin {
             }
         }
 
-        public static List<ItemType> AddAllowedItems() {
-            Log.Info("AllowedItems");
-            var itemTypes = Enum.GetValues(typeof(ItemType)).Cast<ItemType>().ToList();
-            var allowedItems = itemTypes.GetRange(1, 15);
-            allowedItems.AddRange(itemTypes.GetRange(17, 2));
-            allowedItems.AddRange(itemTypes.GetRange(25, 2));
-            allowedItems.AddRange(itemTypes.GetRange(29, 7));
-            allowedItems.AddRange(itemTypes.GetRange(42, 5));
-            allowedItems.AddRange(itemTypes.GetRange(48, 2));
-            allowedItems.AddRange(itemTypes.GetRange(51, 1));
-            allowedItems.AddRange(itemTypes.GetRange(54, 1));
-            Log.Info(allowedItems.Count);
-            return allowedItems;
-        }
+        
 
         public void CoinSpawn() {
             foreach (var player in Player.List) {
@@ -49,6 +37,24 @@ namespace ItemRandomizerPlugin {
             }
         }
 
+        public void OnFlip(FlippingCoinEventArgs ev)
+        {
+            List<Player> bannedFromFlip = new List<Player>();
+            if(ev.Player.CurrentRoom.Zone== ZoneType.LightContainment)
+            {
+                if (!ev.IsTails)
+                {
+                    if (bannedFromFlip.Contains(ev.Player))
+                    {
+                        ev.IsAllowed = false;
+                    } else
+                    {
+                        ev.Player.Teleport(GetRandomLCZRoom());
+                        bannedFromFlip.Add(ev.Player);
+                    }
+                }
+            }
+        }
 
 
         private bool IsNearDropLocation(Player player) {
@@ -68,5 +74,49 @@ namespace ItemRandomizerPlugin {
             return false;
         }
 
+
+
+        private RoomType GetRandomLCZRoom()
+        {
+            Random random = new Random();
+            int index = random.Next(lczRooms.Count);
+            return lczRooms[index];
+        }
+
+        private static List<ItemType> AddAllowedItems()
+        {
+            Log.Info("AllowedItems");
+            var itemTypes = Enum.GetValues(typeof(ItemType)).Cast<ItemType>().ToList();
+            var allowedItems = itemTypes.GetRange(1, 15);
+            allowedItems.AddRange(itemTypes.GetRange(17, 2));
+            allowedItems.AddRange(itemTypes.GetRange(25, 2));
+            allowedItems.AddRange(itemTypes.GetRange(29, 7));
+            allowedItems.AddRange(itemTypes.GetRange(42, 5));
+            allowedItems.AddRange(itemTypes.GetRange(48, 2));
+            allowedItems.AddRange(itemTypes.GetRange(51, 1));
+            allowedItems.AddRange(itemTypes.GetRange(54, 1));
+            Log.Info(allowedItems.Count);
+            return allowedItems;
+        }
+
+        private List<RoomType> lczRooms = new List<RoomType>
+        {
+        RoomType.LczArmory,
+        RoomType.LczCurve,
+        RoomType.LczStraight,
+        RoomType.Lcz914,
+        RoomType.LczCrossing,
+        RoomType.LczTCross,
+        RoomType.LczCafe,
+        RoomType.LczPlants,
+        RoomType.LczToilets,
+        RoomType.LczAirlock,
+        RoomType.Lcz173,
+        RoomType.LczClassDSpawn,
+        RoomType.LczCheckpointB,
+        RoomType.LczGlassBox,
+        RoomType.LczCheckpointA,
+        RoomType.Lcz330
+        };
     }
 }
