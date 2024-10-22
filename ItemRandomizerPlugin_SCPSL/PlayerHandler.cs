@@ -145,7 +145,6 @@ namespace ItemRandomizerPlugin {
         RoomType.LczCheckpointB,
         RoomType.LczGlassBox,
         RoomType.LczCheckpointA,
-        RoomType.Lcz330
         };
 
         private List<RoomType> hczRooms = new List<RoomType>
